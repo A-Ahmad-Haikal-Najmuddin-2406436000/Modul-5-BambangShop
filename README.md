@@ -88,4 +88,13 @@ Berdasarkan pemahaman saya mengenai design patterns, DashMap dan Singleton patte
 
 #### Reflection Publisher-2
 
+1. In the Model-View Controller (MVC) compound pattern, there is no “Service” and “Repository”. Model in MVC covers both data storage and business logic. Explain based on your understanding of design principles, why we need to separate “Service” and “Repository” from a Model? \
+Diperlukannya memisahkan antara “Service” dan “Repository” adalah di MVC biasa model meng-_handle_ semuanya , seperti data storage ataupun business logic. Namun, hal tersebut melanggar Single Responsibility Principle (SRP) dimana tiap class hanya memiliki satu tanggung jawab. Hasilnya pada kode ini, Repository berfungsi untuk CRUD, service mengurus business logic, dan Model merepresentasikan struktur datanya.
+2. What happens if we only use the Model? Explain your imagination on how the interactions between each model (Program, Subscriber, Notification) affect the code complexity for each model? \
+Interaksi model-model tersebut akan menjadi sangat rumit dan bergantung terhadap satu sama lain. Product yang begantung pada Subcriber, Subcriber bergantung pada Notification, dan Notification bergantung pada Product. Tiap perubahan yang muncul pada 1 model akan sangat berisiko membuat model lain menjadi rusak. Selain itu, kode juga menjadi sulit dibaca, di-_test_, dan di-_maintain_.
+3. Have you explored more about Postman? Tell us how this tool helps you to test your current work. You might want to also list which features in Postman you are interested in or feel like it is helpful to help your Group Project or any of your future software engineering projects. \
+Postman sangat membantu untuk testing REST API tanpa memerlukan frontend. Pada project ini, tool ini membantu mengirim secara manual HTTP Request ke endpoints seperti ```POST /notification/<product_type>``` atau ```POST /notification/unsubscribe/<product_type>```, kemudian ktia dapat melihat responsenya secara langsung. \
+Berapa fitur yang membantu: Collections membantu menggabungkan beberapa API endpoint dalam 1 tempat sehingga satu tim dapat berbagi dan menjalankan request yang sama secara konsisten, Automated Tests dimana kita dapat memeriksa response secara otomatis, dapat membantu untuk integration tests ringan, dan Request History yang berguna untuk debugging.
+
 #### Reflection Publisher-3
+
