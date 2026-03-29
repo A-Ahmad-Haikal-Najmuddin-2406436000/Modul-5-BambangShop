@@ -78,6 +78,14 @@ This is the place for you to write reflections:
 
 #### Reflection Publisher-1
 
+1. In the Observer pattern diagram explained by the Head First Design Pattern book, Subscriber is defined as an interface. Explain based on your understanding of Observer design patterns, do we still need an interface (or trait in Rust) in this BambangShop case, or a single Model struct is enough? \
+Kegunaan interface atau trait pada Observer pattern adalah supaya subjek (Publisher pada kasus ini) dapat memberikan notifikasi pada berbagai jenis observer yang memiliki implementasi berbeda secara polimorphism. Berdasarkan pada kode, single model struct sudah cukup karena tiap subscriber memiliki perilaku yang sama, yaitu menerima POST Request pada url mereka. Namun, kita akan memerlukan _trait_ jika berbagai macam subscriber memiliki logic notifikasi yang berbeda-beda. 
+2. id in Program and url in Subscriber is intended to be unique. Explain based on your understanding, is using Vec (list) sufficient or using DashMap (map/dictionary) like we currently use is necessary for this case? \
+Dalam kasus ini, penggunaan DashMap jauh lebih efisien dibandingkan menggunakan Vec. Pada DashMap, secara natural memberikan keunikan melalui _key_-nya _O_(1). Sedangkan Vec, kita harus secara manual mengiterasi seluruh list untuk memeriksa jika url atau id sudah ada sebelumnya _O_(n). Selain itu, untuk operasi _search_ dan _deletion_ di DashMap dapat dilakukan dengan mencari dan menghapus _key_-nya sehingga lebih cepat dan _readable_ dibandingkan Vec yang perlu mencari index (_O_(n)) dan mengubah elemen (_O_(n)).
+3. When programming using Rust, we are enforced by rigorous compiler constraints to make a thread-safe program. In the case of the List of Subscribers (SUBSCRIBERS) static variable, we used the DashMap external library for thread safe HashMap. Explain based on your understanding of design patterns, do we still need DashMap or we can implement Singleton pattern instead? \
+Berdasarkan pemahaman saya mengenai design patterns, DashMap dan Singleton pattern adalah 2 konsep yang menyelesaikan masalah yang berbeda sehingga bukannya memilih salah satu, tapi kita dapat menggunakan keduanya secara bersamaan. Pada kode ini, penggunaaan ```lazy_static!``` pada SUBSCRIBERS sendiri adalah implementasi Singleton Pattern, yang mana hanya ada satu instance penyimpanan data. Selain itu, penggunaan DashMap yang memang didesain untuk concurrency menggunakan "sharded" locking, dan membuat multiple threads mengakses beberapa bagian secara bersamaan sehingga DashMap dalam Singleton membuat thread-safe tanpa adanya hambatan.
+
+
 #### Reflection Publisher-2
 
 #### Reflection Publisher-3
